@@ -11,7 +11,7 @@ html
 	body
 		.tg-container
 			h2 Telegram 蒐集君提交工具
-			h6.mdc-typography.mdc-typography--headline6 基本資料
+			h3 基本資料
 			.mdc-text-field.text-field.mdc-text-field--outlined(data-mdc-auto-init="MDCTextField")
 				input#text-field-outlined.mdc-text-field__input(type="text",data-name,autocomplete="off",style="max-width:231px;min-width:231px;")
 				.mdc-notched-outline.mdc-notched-outline--upgraded
@@ -37,13 +37,13 @@ html
 					.mdc-notched-outline__trailing
 			.mdc-text-field-helper-line
 				p.mdc-text-field-helper-text.mdc-text-field-helper-text--persistent.mdc-text-field-helper-text--validation-msg 簡述您提交之群組或頻道的主要內容
-			h6.mdc-typography.mdc-typography--headline6 類型
+			h3 類型
 			.mdc-chip-set.mdc-chip-set--choice(data-mdc-auto-init="MDCChipSet")
 				.mdc-chip.mdc-chip--selected(data-type="group")
 					.mdc-chip__text 群組
 				.mdc-chip(data-type="channel")
 					.mdc-chip__text 頻道
-			h6.mdc-typography.mdc-typography--headline6 分類
+			h3 分類
 			div(style="width: 231px;column-count: 2;display: block;")
 				-for(item of category)
 					div.mdc-form-field(data-mdc-auto-init="MDCFormField")
@@ -54,14 +54,14 @@ html
 									path.mdc-checkbox__checkmark-path(fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59")
 								.mdc-checkbox__mixedmark
 						label(for=`checkbox-${item}`)=item
-			hr
+			.m-32
 			input(type="hidden",id="g-recaptcha-response",name="g-recaptcha-response")
 			button#submit.mdc-button.mdc-button--raised 提交
 			p.mdc-typography--body2 亂填或連結失效會被刪除
-			hr
+			.m-32
 			.mdc-typography--overline by gnehs 2019
 			.mdc-typography--overline Made with <span style="color: #e25555;">&hearts;</span> in Taiwan
-			hr
+			.m-16
 			a(href="https://tg.gnehs.net/") Telegram 蒐集君
 			#snackbar-error.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
 				.mdc-snackbar__surface

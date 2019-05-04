@@ -10,7 +10,7 @@ wp.categories().perPage(100).then(x => {
 	wpCategory =
 		x
 		.map(x => x.name)
-		.filter(x => x != "未分類" && x != "頻道" && x != "網站" && x != "群組")
+		.filter(x => !x.match(/未分類|頻道|網站|群組|公告/))
 	console.log('wpCategory loaded')
 })
 /* GET home page. */
