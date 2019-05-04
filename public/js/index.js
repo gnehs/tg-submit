@@ -42,6 +42,6 @@ $(`button#submit`).click(function () {
 })
 
 function showError(error) {
-    $('#snackbar-error [data-error]').text('發生錯誤：' + error)
+    $('#snackbar-error [data-error]').text('資料填寫不正確：' + error)
     new mdc.snackbar.MDCSnackbar(document.querySelector('#snackbar-error')).open()
 }

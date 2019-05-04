@@ -2,6 +2,10 @@ doctype html
 html
 	head
 		title Telegram 蒐集君提交工具
+		meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no")
+		meta(http-equiv="X-UA-Compatible",content="IE=edge")
+		meta(name="description",content="Telegram 蒐集君的提交工具，可讓使用者提交群組或頻道至 Telegram 蒐集君")
+		meta(charset="UTF-8")
 		link(rel="stylesheet",href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css")
 		link(rel='stylesheet',href='./css/style.css')
 	body
@@ -41,7 +45,6 @@ html
 					.mdc-chip__text 頻道
 			h6.mdc-typography.mdc-typography--headline6 分類
 			div(style="width: 231px;column-count: 2;display: block;")
-				-let category =["ACGN","地區","Pokémon Go","外語","科技","聊天","興趣","購物","金融","虛擬貨幣","Telegram 推廣"]
 				-for(item of category)
 					div.mdc-form-field(data-mdc-auto-init="MDCFormField")
 						.mdc-checkbox
