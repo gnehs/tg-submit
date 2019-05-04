@@ -1,0 +1,81 @@
+doctype html
+html
+	head
+		title Telegram 蒐集君提交工具
+		link(rel="stylesheet",href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css")
+		link(rel='stylesheet',href='./css/style.css')
+	body
+		.tg-container
+			h2 Telegram 蒐集君提交工具
+			h6.mdc-typography.mdc-typography--headline6 基本資料
+			.mdc-text-field.text-field.mdc-text-field--outlined(data-mdc-auto-init="MDCTextField")
+				input#text-field-outlined.mdc-text-field__input(type="text",data-name,autocomplete="off",style="max-width:231px;min-width:231px;")
+				.mdc-notched-outline.mdc-notched-outline--upgraded
+					.mdc-notched-outline__leading
+					.mdc-notched-outline__notch
+						label.mdc-floating-label 名稱
+					.mdc-notched-outline__trailing
+			.mdc-text-field.text-field.mdc-text-field--outlined.m-16(data-mdc-auto-init="MDCTextField")
+				input#text-field-outlined.mdc-text-field__input(type="text",data-link,autocomplete="off",style="max-width:231px;min-width:231px;")
+				.mdc-notched-outline.mdc-notched-outline--upgraded
+					.mdc-notched-outline__leading
+					.mdc-notched-outline__notch
+						label.mdc-floating-label 連結
+					.mdc-notched-outline__trailing
+			.mdc-text-field-helper-line
+				p.mdc-text-field-helper-text.mdc-text-field-helper-text--persistent.mdc-text-field-helper-text--validation-msg https://t.me/xxxxxx 的那個
+			.mdc-text-field.mdc-text-field--textarea.m-16(data-mdc-auto-init="MDCTextField")
+				textarea#textarea.mdc-text-field__input(data-intro,autocomplete="off",style="max-width:231px;min-width:231px;min-height:60px")
+				.mdc-notched-outline.mdc-notched-outline--upgraded
+					.mdc-notched-outline__leading
+					.mdc-notched-outline__notch
+						label.mdc-floating-label 介紹
+					.mdc-notched-outline__trailing
+			.mdc-text-field-helper-line
+				p.mdc-text-field-helper-text.mdc-text-field-helper-text--persistent.mdc-text-field-helper-text--validation-msg 簡述您提交之群組或頻道的主要內容
+			h6.mdc-typography.mdc-typography--headline6 類型
+			.mdc-chip-set.mdc-chip-set--choice(data-mdc-auto-init="MDCChipSet")
+				.mdc-chip.mdc-chip--selected(data-type="group")
+					.mdc-chip__text 群組
+				.mdc-chip(data-type="channel")
+					.mdc-chip__text 頻道
+			h6.mdc-typography.mdc-typography--headline6 分類
+			div(style="width: 231px;column-count: 2;display: block;")
+				-let category =["ACGN","地區","Pokémon Go","外語","科技","聊天","興趣","購物","金融","虛擬貨幣","Telegram 推廣"]
+				-for(item of category)
+					div.mdc-form-field(data-mdc-auto-init="MDCFormField")
+						.mdc-checkbox
+							input.mdc-checkbox__native-control(type="checkbox",id=`checkbox-${item}`,data-checkbox=item,autocomplete="off")
+							.mdc-checkbox__background
+								svg.mdc-checkbox__checkmark(viewbox="0 0 24 24")
+									path.mdc-checkbox__checkmark-path(fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59")
+								.mdc-checkbox__mixedmark
+						label(for=`checkbox-${item}`)=item
+			hr
+			input(type="hidden",id="g-recaptcha-response",name="g-recaptcha-response")
+			button#submit.mdc-button.mdc-button--raised 提交
+			p.mdc-typography--body2 亂填或連結失效會被刪除
+			hr
+			.mdc-typography--overline by gnehs 2019
+			.mdc-typography--overline Made with <span style="color: #e25555;">&hearts;</span> in Taiwan
+			hr
+			a(href="https://tg.gnehs.net/") Telegram 蒐集君
+			#snackbar-error.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
+				.mdc-snackbar__surface
+					.mdc-snackbar__label(role='status', aria-live='polite',data-error) 提交成功！
+			#snackbar-submit.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
+				.mdc-snackbar__surface
+					.mdc-snackbar__label(role='status', aria-live='polite') 正在提交，請稍候～
+			#snackbar-failed.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
+				.mdc-snackbar__surface
+					.mdc-snackbar__label(role='status', aria-live='polite') 提交失敗，請重新整理網頁後再試一次
+					.mdc-snackbar__actions
+						a.mdc-button.mdc-snackbar__action(href="https://t.me/gnehs_OwO") 聯絡管理員
+		script!=`const reCAPTCHA_site_key="${reCAPTCHA_site_key}"`
+		script(src='https://unpkg.com/material-components-web@latest/dist/material-components-web.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js')
+		script(src='https://www.google.com/recaptcha/api.js?render='+reCAPTCHA_site_key)
+		script(src='./js/index.js')
+		 	
+			
