@@ -1,9 +1,0 @@
-{
-    "reCAPTCHA_site_key": "6Lf4tKEUAAAAAKO---B3DcH-HPqZAkqM4tcjtUbO",
-    "reCAPTCHA_secret_key": "6Lf4tKEUAAAAADgFlS7b46eu6l69e3LsDyhcqcn2",
-    "wordpress": {
-        "endpoint": "https://tg.gnehs.net/wp-json",
-        "username": "tg-submit",
-        "password": "brwRBH1z44DVXQ5Ggz9sH1^R"
-    }
-}
