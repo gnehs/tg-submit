@@ -45,15 +45,15 @@ html
 					.mdc-chip__text 頻道
 			h3 分類
 			div(style="width: 231px;column-count: 2;display: block;")
-				-for(item of category)
+				-for(item of Object.entries(category))
 					div.mdc-form-field(data-mdc-auto-init="MDCFormField")
 						.mdc-checkbox
-							input.mdc-checkbox__native-control(type="checkbox",id=`checkbox-${item}`,data-checkbox=item,autocomplete="off")
+							input.mdc-checkbox__native-control(type="checkbox",id=`checkbox-${item[1]}`,data-checkbox=item[1],autocomplete="off")
 							.mdc-checkbox__background
 								svg.mdc-checkbox__checkmark(viewbox="0 0 24 24")
 									path.mdc-checkbox__checkmark-path(fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59")
 								.mdc-checkbox__mixedmark
-						label(for=`checkbox-${item}`)=item
+						label(for=`checkbox-${item[1]}`)=item[0]
 			.m-32
 			input(type="hidden",id="g-recaptcha-response",name="g-recaptcha-response")
 			button#submit.mdc-button.mdc-button--raised 提交

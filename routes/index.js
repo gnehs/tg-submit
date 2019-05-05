@@ -5,13 +5,16 @@ const config = require("../config.json")
 const WPAPI = require('wpapi');
 const wp = new WPAPI(config.wordpress);
 
-var wpCategory = [];
+var wpCategory = {};
+var wpCategory_type = {};
 wp.categories().perPage(100).then(x => {
-	wpCategory =
-		x
-		.map(x => x.name)
-		.filter(x => !x.match(/未分類|頻道|網站|群組|公告/))
-	console.log('wpCategory loaded')
+	// 給前端看的分類標籤
+	x.filter(x => !x.name.match(/未分類|頻道|網站|群組|公告/))
+		.map(x => wpCategory[x.name] = x.id)
+	// 後端用的 type
+	x.filter(x => x.name.match(/未分類|頻道|網站|群組|公告/))
+		.map(x => wpCategory_type[x.name] = x.id)
+	console.log('INFO', 'wpCategory loaded')
 })
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -47,32 +50,23 @@ router.post('/', async (req, res, next) => {
 	}
 
 	/* 處理分類 */
-	let categoriesData = await wp.categories().perPage(100)
-	let categories = []
-	req.body.category.map(v => {
-		let search = categoriesData.find(e => e.name == v).id
-		if (categories) categories.push(search)
-	})
-	categories.push(req.body.type == "group" ? 11 : 15)
+	req.body.category.push(wpCategory_type[req.body.type == "group" ? '群組' : '頻道'])
 
+	// 好ㄌ，愛尼
+	res.json({
+		success: true
+	})
 	/* 提交囉 */
 	await wp.posts().create({
 		title: req.body.name,
 		content: req.body.intro,
-		categories: categories,
+		categories: req.body.category,
 		meta: {
 			"tg-link": req.body.link
 		},
 		status: 'pending'
 	}).catch(e => {
 		console.error(e)
-		return res.json({
-			success: false
-		})
-	})
-	// 好ㄌ，愛尼
-	res.json({
-		success: true
 	})
 })
 router.get('/success', (req, res, next) => {
