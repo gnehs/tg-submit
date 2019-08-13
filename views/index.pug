@@ -15,6 +15,10 @@ html
 	body
 		.tg-container
 			h2 Telegram 蒐集君提交工具
+			h3 審核規則
+			ul
+				li 提交之內容不得含有 NSFW（如：裸露、性暗示等）
+				li 若內容隨意填寫（如：分類亂勾、連結亂填）將不予審核
 			h3 基本資料
 			.mdc-text-field.text-field.mdc-text-field--outlined(data-mdc-auto-init="MDCTextField")
 				input#text-field-outlined.mdc-text-field__input(type="text",data-name,autocomplete="off",style="max-width:231px;min-width:231px;")
@@ -61,7 +65,7 @@ html
 			.m-32
 			input(type="hidden",id="g-recaptcha-response",name="g-recaptcha-response")
 			button#submit.mdc-button.mdc-button--raised 提交
-			p.mdc-typography--body2 亂填或連結失效會被刪除
+			p.mdc-typography--body2 內容隨意填寫將不予審核
 			.m-32
 			.mdc-typography--overline by gnehs 2019
 			.mdc-typography--overline Made with <span style="color: #e25555;">&hearts;</span> in Taiwan

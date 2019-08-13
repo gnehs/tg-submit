@@ -5,6 +5,7 @@ const config = require("../config.json")
 const WPAPI = require('wpapi');
 const wp = new WPAPI(config.wordpress);
 
+/* Wordpress 分類讀取 */
 var wpCategory = {};
 var wpCategory_type = {};
 
@@ -24,6 +25,7 @@ function loadWordpressCategory(retryTimes = 1) {
 	})
 }
 loadWordpressCategory()
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
 	res.render('index', {
