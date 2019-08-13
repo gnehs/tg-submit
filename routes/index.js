@@ -7,15 +7,23 @@ const wp = new WPAPI(config.wordpress);
 
 var wpCategory = {};
 var wpCategory_type = {};
-wp.categories().perPage(100).then(x => {
-	// 給前端看的分類標籤
-	x.filter(x => !x.name.match(/未分類|頻道|網站|群組|公告/))
-		.map(x => wpCategory[x.name] = x.id)
-	// 後端用的 type
-	x.filter(x => x.name.match(/未分類|頻道|網站|群組|公告/))
-		.map(x => wpCategory_type[x.name] = x.id)
-	console.log('INFO', 'wpCategory loaded')
-})
+
+function loadWordpressCategory(retryTimes = 1) {
+	wp.categories().perPage(100).then(x => {
+		// 給前端看的分類標籤
+		x.filter(x => !x.name.match(/未分類|頻道|網站|群組|公告/))
+			.map(x => wpCategory[x.name] = x.id)
+		// 後端添加類型用的 type
+		x.filter(x => x.name.match(/未分類|頻道|網站|群組|公告/))
+			.map(x => wpCategory_type[x.name] = x.id)
+		console.log('INFO', 'Wordpress category loaded')
+	}).catch(e => {
+		console.log('ERROR', `cannot read Wordpress category, retry in ${Math.pow(retryTimes,2)}s`)
+		setTimeout(() => loadWordpressCategory(retryTimes), 1000 * Math.pow(retryTimes, 2))
+		retryTimes++
+	})
+}
+loadWordpressCategory()
 /* GET home page. */
 router.get('/', (req, res, next) => {
 	res.render('index', {
