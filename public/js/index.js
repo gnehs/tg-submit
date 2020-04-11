@@ -1,4 +1,3 @@
-window.mdc.autoInit();
 grecaptcha.ready(function () {
     grecaptcha.execute(reCAPTCHA_site_key, {
             action: 'tg'
@@ -7,14 +6,12 @@ grecaptcha.ready(function () {
             document.getElementById('g-recaptcha-response').value = token;
         });
 });
-const snackbarSubmit = new mdc.snackbar.MDCSnackbar(document.querySelector('#snackbar-submit'));
-const snackbarFailed = new mdc.snackbar.MDCSnackbar(document.querySelector('#snackbar-failed'));
 $(`button#submit`).click(function () {
     let data = {
         name: $(`[data-name]`).val(),
         link: $(`[data-link]`).val(),
         intro: $(`[data-intro]`).val(),
-        type: $(`.mdc-chip.mdc-chip--selected[data-type]`).attr('data-type'),
+        type: $('input[name="tg-type"]:checked').val(),
         category: [],
         grecaptcha: $(`#g-recaptcha-response`).val()
     }
@@ -24,17 +21,35 @@ $(`button#submit`).click(function () {
     /* 檢查看看有沒有漏填的 */
     let regex = new RegExp(/(https?:\/\/[^\s]+)/g)
     let error = []
-    if (data.name == "" || data.link == "" || data.intro == "") error.push('基本資料尚未填寫完畢')
-    else if (!regex.test(data.link) || !data.link.startsWith("https://t.me/")) error.push('連結格式不正確')
-    if (!data.type) error.push('未選擇類型')
-    if (!data.category.length > 0) error.push('分類未勾選')
-    if (error.length > 0) return showError(error.join('、'))
+    if (data.name == "" || data.link == "" || data.intro == "") {
+        error.push('資料填寫未完全')
+    } else if (!regex.test(data.link) || !data.link.startsWith("https://t.me/")) {
+        error.push('連結格式不正確')
+    }
+    if (!data.type) {
+        error.push('未選擇類型')
+    }
+    if (!data.category.length > 0) {
+        error.push('分類未勾選')
+    }
+    if (error.length > 0) {
+        return Swal.fire({
+            icon: 'error',
+            title: '資料填寫不正確',
+            text: error.join('、')
+        })
+    }
     /* 提交囉 */
     async function submit(data) {
-        snackbarSubmit.open()
+        $(`button#submit`).addClass('loading disabled')
         let result = await axios.post('/', data)
-        if (!result.data.success) snackbarFailed.open()
+        if (!result.data.success) Swal.fire({
+            icon: 'error',
+            title: '送出失敗',
+            text: '可能是網路環境所致，請稍後再試。'
+        })
         else location.href = "/success"
+        $(`button#submit`).removeClass('loading disabled')
     }
     submit(data)
 
@@ -42,6 +57,9 @@ $(`button#submit`).click(function () {
 })
 
 function showError(error) {
-    $('#snackbar-error [data-error]').text('資料填寫不正確：' + error)
-    new mdc.snackbar.MDCSnackbar(document.querySelector('#snackbar-error')).open()
+    Swal.fire({
+        icon: 'error',
+        title: '資料填寫不正確',
+        text: error
+    })
 }

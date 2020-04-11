@@ -1,12 +1,16 @@
-.tg-container {
-  width: 1000px;
+.header-container {
+  width: 500px;
   max-width: 95vw;
   margin: 32px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
+
+.tg-container {
+  width: 300px;
+  max-width: 95vw;
+  margin: 32px auto;
+}
+
 
 .m-16 {
   margin-top: 16px;

@@ -10,80 +10,65 @@ html
 		meta(property="og:site_name" content="😲Telegram 蒐集君😲")
 		meta(property="og:url" content="https://tg-submit.gnehs.net/")
 		meta(property="og:image" content="https://tg-submit.gnehs.net/img/open-graph.jpg")
-		link(rel="stylesheet",href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css")
 		link(rel='stylesheet',href='./css/style.css')
+		link(rel='stylesheet',href='https://unpkg.com/spectre.css/dist/spectre.min.css')
+		link(rel='stylesheet',href='https://unpkg.com/spectre.css/dist/spectre-exp.min.css')
+		link(rel='stylesheet',href='https://unpkg.com/spectre.css/dist/spectre-icons.min.css')
 	body
-		.tg-container
+	
+		.header-container
 			h2 Telegram 蒐集君提交工具
+			.m-32
 			h3 審核規則
 			ul
 				li 提交之內容不得含有 NSFW（如：裸露、性暗示等）
 				li 若內容隨意填寫（如：分類亂勾、連結亂填）將不予審核
-			h3 基本資料
-			.mdc-text-field.text-field.mdc-text-field--outlined(data-mdc-auto-init="MDCTextField")
-				input#text-field-outlined.mdc-text-field__input(type="text",data-name,autocomplete="off",style="max-width:231px;min-width:231px;")
-				.mdc-notched-outline.mdc-notched-outline--upgraded
-					.mdc-notched-outline__leading
-					.mdc-notched-outline__notch
-						label.mdc-floating-label 名稱
-					.mdc-notched-outline__trailing
-			.mdc-text-field.text-field.mdc-text-field--outlined.m-16(data-mdc-auto-init="MDCTextField")
-				input#text-field-outlined.mdc-text-field__input(type="text",data-link,autocomplete="off",style="max-width:231px;min-width:231px;")
-				.mdc-notched-outline.mdc-notched-outline--upgraded
-					.mdc-notched-outline__leading
-					.mdc-notched-outline__notch
-						label.mdc-floating-label 連結
-					.mdc-notched-outline__trailing
-			.mdc-text-field-helper-line
-				p.mdc-text-field-helper-text.mdc-text-field-helper-text--persistent.mdc-text-field-helper-text--validation-msg https://t.me/xxxxxx 的那個
-			.mdc-text-field.mdc-text-field--textarea.m-16(data-mdc-auto-init="MDCTextField")
-				textarea#textarea.mdc-text-field__input(data-intro,autocomplete="off",style="max-width:231px;min-width:231px;min-height:60px")
-				.mdc-notched-outline.mdc-notched-outline--upgraded
-					.mdc-notched-outline__leading
-					.mdc-notched-outline__notch
-						label.mdc-floating-label 介紹
-					.mdc-notched-outline__trailing
-			.mdc-text-field-helper-line
-				p.mdc-text-field-helper-text.mdc-text-field-helper-text--persistent.mdc-text-field-helper-text--validation-msg 簡述您提交之群組或頻道的主要內容
-			h3 類型
-			.mdc-chip-set.mdc-chip-set--choice(data-mdc-auto-init="MDCChipSet")
-				.mdc-chip.mdc-chip--selected(data-type="group")
-					.mdc-chip__text 群組
-				.mdc-chip(data-type="channel")
-					.mdc-chip__text 頻道
-			h3 分類
-			div(style="width: 231px;column-count: 2;display: block;")
-				-for(item of Object.entries(category))
-					div.mdc-form-field(data-mdc-auto-init="MDCFormField")
-						.mdc-checkbox
-							input.mdc-checkbox__native-control(type="checkbox",id=`checkbox-${item[1]}`,data-checkbox=item[1],autocomplete="off")
-							.mdc-checkbox__background
-								svg.mdc-checkbox__checkmark(viewbox="0 0 24 24")
-									path.mdc-checkbox__checkmark-path(fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59")
-								.mdc-checkbox__mixedmark
-						label(for=`checkbox-${item[1]}`)=item[0]
+		.tg-container
+			.m-32
+			.form-group
+				label.form-label 名稱
+				input.form-input(type='text', placeholder="群組或頻道的名稱", data-name)
+			.form-group
+				label.form-label 連結
+				input.form-input(type='text', placeholder="https://t.me/xxxxx", data-link)
+			.form-group
+				label.form-label 介紹
+				textarea.form-input( data-intro, placeholder="簡述您提交之群組或頻道的主要內容", rows='3')
+			.form-group
+				label.form-label 類型
+				label.form-radio
+					input(type='radio', name='tg-type',value="group")
+					i.form-icon
+					|  群組
+				label.form-radio
+					input(type='radio', name='tg-type',value="channel")
+					i.form-icon
+					|  頻道
+			.form-group
+				label.form-label 分類
+				-for(item of Object.entries(category).sort(()=>Math.random()-0.5))
+					label.form-checkbox
+						input(type='checkbox',id=`checkbox-${item[1]}`,data-checkbox=item[1])
+						i.form-icon
+						=item[0]
+			
 			.m-32
 			input(type="hidden",id="g-recaptcha-response",name="g-recaptcha-response")
-			button#submit.mdc-button.mdc-button--raised 提交
-			p.mdc-typography--body2 內容隨意填寫將不予審核
-			.m-32
-			.mdc-typography--overline by gnehs 2019
-			.mdc-typography--overline Made with <span style="color: #e25555;">&hearts;</span> in Taiwan
-			.m-16
-			a(href="https://tg.gnehs.net/") Telegram 蒐集君
-			#snackbar-error.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
-				.mdc-snackbar__surface
-					.mdc-snackbar__label(role='status', aria-live='polite',data-error) 提交成功！
-			#snackbar-submit.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
-				.mdc-snackbar__surface
-					.mdc-snackbar__label(role='status', aria-live='polite') 正在提交，請稍候～
-			#snackbar-failed.mdc-snackbar(data-mdc-auto-init="MDCSnackbar")
-				.mdc-snackbar__surface
-					.mdc-snackbar__label(role='status', aria-live='polite') 提交失敗，請重新整理網頁後再試一次
-					.mdc-snackbar__actions
-						a.mdc-button.mdc-snackbar__action(href="https://t.me/gnehs_OwO") 聯絡管理員
+			.text-center
+				button#submit.btn.btn-primary 提交
+				p 內容隨意填寫將不予審核
+
+			.divider
+
+			.text-center
+				.m-32
+				a(href="https://tg.gnehs.net/") Telegram 蒐集君
+
+				.m-32
+				div='by gnehs 2019-'+new Date().getFullYear()
+				div Made with <span style="color: #e25555;">&hearts;</span> in Taiwan
 		script!=`const reCAPTCHA_site_key="${reCAPTCHA_site_key}"`
-		script(src='https://unpkg.com/material-components-web@latest/dist/material-components-web.js')
+		script(src='https://cdn.jsdelivr.net/npm/sweetalert2@9')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js')
 		script(src='https://www.google.com/recaptcha/api.js?render='+reCAPTCHA_site_key)

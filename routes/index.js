@@ -19,7 +19,7 @@ function loadWordpressCategory(retryTimes = 1) {
 			.map(x => wpCategory_type[x.name] = x.id)
 		console.log('INFO', 'Wordpress category loaded')
 	}).catch(e => {
-		console.log('ERROR', `cannot read Wordpress category, retry in ${Math.pow(retryTimes,2)}s`)
+		console.log('ERROR', `cannot fetch wordpress category, retry in ${Math.pow(retryTimes,2)}s`)
 		setTimeout(() => loadWordpressCategory(retryTimes), 1000 * Math.pow(retryTimes, 2))
 		retryTimes++
 	})
@@ -27,13 +27,13 @@ function loadWordpressCategory(retryTimes = 1) {
 loadWordpressCategory()
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
 	res.render('index', {
 		reCAPTCHA_site_key: config.reCAPTCHA_site_key,
 		category: wpCategory
 	});
 });
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
 	/* Google 哈囉// */
 	let result = await rp({
 		method: 'post',
@@ -60,8 +60,7 @@ router.post('/', async (req, res, next) => {
 	}
 
 	/* 處理分類 */
-	req.body.category.push(wpCategory_type[req.body.type == "group" ? '群組' : '頻道'])
-
+	req.body.category.push(wpCategory_type[req.body.type == "group" ? '👥群組' : '📣頻道'])
 	// 好ㄌ，愛尼
 	res.json({
 		success: true
